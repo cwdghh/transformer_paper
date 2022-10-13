@@ -10,3 +10,5 @@ Currently, this repo contains following papers:
 - [ ] Training data-efficient image transformers & distillation through attention (DeiT)
 - [ ] Swin Transformer: Hierarchical Vision Transformer using ShiftedWindows
 - [ ] CROSSFORMER: A VERSATILE VISION TRANSFORMER HINGING ON CROSS-SCALE ATTENTION
+
+Plan to add a code directory for each paper containing the original code and some comments.
