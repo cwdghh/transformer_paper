@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.utils.checkpoint as checkpoint
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
-
 class Mlp(nn.Module):
+    r"""2-layer MLP"""
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
         super().__init__()
         out_features = out_features or in_features
@@ -23,6 +23,10 @@ class Mlp(nn.Module):
         return x
 
 class DynamicPosBias(nn.Module):
+    r"""DPB module
+    
+    Use a MLP to predict position bias used in attention.
+    """
     def __init__(self, dim, num_heads, residual):
         super().__init__()
         self.residual = residual
@@ -91,7 +95,7 @@ class Attention(nn.Module):
             # generate mother-set
             position_bias_h = torch.arange(1 - self.group_size[0], self.group_size[0])
             position_bias_w = torch.arange(1 - self.group_size[1], self.group_size[1])
-            biases = torch.stack(torch.meshgrid([position_bias_h, position_bias_w]))  # 2, 2Wh-1, 2W2-1
+            biases = torch.stack(torch.meshgrid([position_bias_h, position_bias_w]))  # 2, 2Wh-1, 2Ww-1
             biases = biases.flatten(1).transpose(0, 1).float()
             self.register_buffer("biases", biases)
 
@@ -126,6 +130,7 @@ class Attention(nn.Module):
         q, k, v = qkv[0], qkv[1], qkv[2]  # make torchscript happy (cannot use tensor as tuple)
 
         q = q * self.scale
+        # @ stands for matrix multiplication
         attn = (q @ k.transpose(-2, -1))
 
         if self.position_bias:
