@@ -34,6 +34,8 @@ Now, experiments are done on four representative visual tasks, *i.e.*, image cla
 ```bash
 pip3 install numpy scipy Pillow pyyaml torch==1.7.0 torchvision==0.8.1 timm==0.3.2
 ```
+似乎仍然需要安装库`termcolor`, `protobuf`
+
 2. Dataset: ImageNet
 
 3. Requirements for detection/instance segmentation and semantic segmentation are listed here: [detection/README.md](./detection/README.md) or [segmentation/README.md](./segmentation/README.md)

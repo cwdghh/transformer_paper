@@ -7,7 +7,7 @@ from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.data import Mixup
 from timm.data import create_transform
 from timm.data.transforms import _pil_interp
-from .tfrecord_torch_loader import ImageTFRecordDataSet
+# from .tfrecord_torch_loader import ImageTFRecordDataSet
 
 from .cached_image_folder import CachedImageFolder
 from .samplers import SubsetRandomSampler
@@ -66,7 +66,7 @@ def build_loader(config):
 def build_dataset(is_train, config):
     transform = build_transform(is_train, config)
     if config.DATA.DATASET == 'imagenet':
-        prefix = 'train' if is_train else 'validation'
+        prefix = 'train' if is_train else 'val'
         if config.DATA.ZIP_MODE:
             ann_file = prefix + "_map.txt"
             prefix = prefix + ".zip@/"
@@ -76,18 +76,18 @@ def build_dataset(is_train, config):
             root = os.path.join(config.DATA.DATA_PATH, prefix)
             dataset = datasets.ImageFolder(root, transform=transform)
         nb_classes = 1000
-    elif config.DATA.DATASET == 'ImageNet': ## tfrecord
-        if is_train:
-            records = [os.path.join(config.DATA.DATA_PATH, "train.tfrecord")]
-        else:
-            records = [os.path.join(config.DATA.DATA_PATH, "validation.tfrecord")]
-        dataset = ImageTFRecordDataSet(records, transform)
-        nb_classes = 1000
-    elif config.DATA.DATASET == 'ImageNet22K': ## tfrecord
-        root = config.DATA.DATA_PATH
-        records = [os.path.join(root, filename) for filename in os.listdir(root) if ".tfrecord" in filename]
-        dataset = ImageTFRecordDataSet(records, transform)
-        nb_classes = 21841
+    # elif config.DATA.DATASET == 'ImageNet': ## tfrecord
+    #     if is_train:
+    #         records = [os.path.join(config.DATA.DATA_PATH, "train.tfrecord")]
+    #     else:
+    #         records = [os.path.join(config.DATA.DATA_PATH, "validation.tfrecord")]
+    #     dataset = ImageTFRecordDataSet(records, transform)
+    #     nb_classes = 1000
+    # elif config.DATA.DATASET == 'ImageNet22K': ## tfrecord
+    #     root = config.DATA.DATA_PATH
+    #     records = [os.path.join(root, filename) for filename in os.listdir(root) if ".tfrecord" in filename]
+    #     dataset = ImageTFRecordDataSet(records, transform)
+    #     nb_classes = 21841
     else:
         raise NotImplementedError("We only support ImageNet (for tfrecord), imagenet, and ImageNet22K Now.")
 
