@@ -72,6 +72,14 @@ python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/t
 --batch-size 128 --data-path path_to_imagenet --eval --resume path_to_crossformer-t.pth
 ```
 
+直接能够运行的；
+```bash
+CUDA_VISIBLE_DEVICES=1,2 python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/tiny_patch4_group7_224.yaml --batch-size 16 --data-path /home/cheerss/data/tiny-imagenet-200-pytorch/ --eval --resume path_to_crossformer-t.pth
+
+CUDA_VISIBLE_DEVICES=0,1 python -u -m torch.distributed.launch --nproc_per_node 4 main.py --cfg configs/tiny_patch4_group7_224.yaml \
+--batch-size 64 --data-path /home/cheerss/data/tiny-imagenet-200-pytorch/ --output ./output
+```
+
 Training scripts for objection detection: [detection/README.md](./detection/README.md).
 
 Training scripts for semantic segmentation: [segmentation/README.md](./segmentation/README.md).
