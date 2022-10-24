@@ -8,7 +8,10 @@ Currently, this repo contains following papers:
 
 - [ ] AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE (Vision Transformer, ViT)
 - [ ] Training data-efficient image transformers & distillation through attention (DeiT)
-- [ ] Swin Transformer: Hierarchical Vision Transformer using ShiftedWindows
+- [ ] Swin Transformer: Hierarchical Vision Transformer using Shifted Windows
 - [ ] CROSSFORMER: A VERSATILE VISION TRANSFORMER HINGING ON CROSS-SCALE ATTENTION
+- [ ] Multiscale Vision Transformers (MViT)
+
+Only take some notes on other papers.
 
 Plan to add a code directory for each paper containing the original code and some comments.
