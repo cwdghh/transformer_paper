@@ -68,7 +68,7 @@ python -u -m torch.distributed.launch --nproc_per_node 8 main.py --cfg configs/l
 ### Testing
 ```bash
 ## Take CrossFormer-T as an example
-python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/tiny_patch4_group7_224.yaml \
+python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/tiny_patch4_linear_group_224.yaml \
 --batch-size 128 --data-path path_to_imagenet --eval --resume path_to_crossformer-t.pth
 ```
 
@@ -76,8 +76,10 @@ python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/t
 ```bash
 CUDA_VISIBLE_DEVICES=1,2 python -u -m torch.distributed.launch --nproc_per_node 1 main.py --cfg configs/tiny_patch4_group7_224.yaml --batch-size 16 --data-path /home/cheerss/data/tiny-imagenet-200-pytorch/ --eval --resume path_to_crossformer-t.pth
 
-CUDA_VISIBLE_DEVICES=0,1 python -u -m torch.distributed.launch --nproc_per_node 4 main.py --cfg configs/tiny_patch4_group7_224.yaml \
---batch-size 64 --data-path /home/cheerss/data/tiny-imagenet-200-pytorch/ --output ./output
+# nproc_per_node must less or equal than the number of GPUs
+# 每次运行前请检查你的`models/build.py`文件中使用的模型是否正确！！！
+CUDA_VISIBLE_DEVICES=2,3 python -u -m torch.distributed.launch --nproc_per_node 2 --master_port 27501 main.py --cfg configs/small_patch4_linear_group_224.yaml \
+--batch-size 64 --data-path /home/cheerss/data/tiny-imagenet-200-pytorch/ --output ./output_200_small_pad
 ```
 
 Training scripts for objection detection: [detection/README.md](./detection/README.md).

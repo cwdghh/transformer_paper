@@ -60,6 +60,7 @@ def parse_option():
     parser.add_argument('--mlp_ratio', type=int, default=4, help="")
     parser.add_argument('--warmup_epochs', type=int, default=20, help="#epoches for warm up")
     parser.add_argument("--local_rank", type=int, required=True, help='local rank for DistributedDataParallel')
+    parser.add_argument('--group_type', type=str, default='constant', help='what strategy to change the group size')
 
     args, unparsed = parser.parse_known_args()
 
